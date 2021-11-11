@@ -33,12 +33,19 @@ public:
             }
 
             while (std::getline(myFile, line, '\r')) {
-                std::istringstream ss(line);
-                std::string token;
                 int index = 0;
-                while (std::getline(ss, token, ',')) {
-                    float num = std::stof(token);
-                    columns[index].second.push_back(num);
+                std::istringstream ss(line);
+                if (line.compare("\n") != 0) {
+                    std::string token;
+
+                    while (std::getline(ss, token, ',')) {
+                        float num = std::stof(token);
+                        columns[index].second.push_back(num);
+                        index++;
+                    }
+
+                } else {
+                    break;
                 }
             }
 
