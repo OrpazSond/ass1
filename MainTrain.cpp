@@ -10,7 +10,7 @@
 #include <math.h>
 
 using namespace std;
-
+/*
 // this is a simple test to put you on the right track
 void generateTrainCSV(float a1,float b1, float a2, float b2){
 	ofstream out("trainFile1.csv");
@@ -108,4 +108,17 @@ int main(){
 
 	cout<<"done"<<endl;
 	return 0;
-}
+}*/
+
+int main() {
+    TimeSeries ts = TimeSeries("/home/orpaz/CLionProjects/ass1/ex2.csv");
+    for (int i = 0; i < ts.getVector().size(); i++) {
+        std::cout << ts.getVector()[i].first << endl;
+        for (int j = 0; j < ts.getVector()[i].second.size(); j++) {
+            std::cout << ts.getVector()[i].second[j] << endl;
+        }
+    }
+   };
+
+
+
