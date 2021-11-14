@@ -24,7 +24,7 @@ public:
         std::ifstream myFile(CSVfileName);
 
         if (myFile.is_open()) {
-            getline(myFile, line, '\r');
+            getline(myFile, line);
             std::istringstream ss(line);
             std::string token;
             while (std::getline(ss, token, ',')) {
@@ -32,7 +32,7 @@ public:
                 columns.push_back(make_pair(token, v1));
             }
 
-            while (std::getline(myFile, line, '\r')) {
+            while (std::getline(myFile, line)) {
                 int index = 0;
                 std::istringstream ss(line);
                 if (line.compare("\n") != 0) {
@@ -64,7 +64,7 @@ public:
         myFile.close();
     }
 
-    vector<pair<string, vector<float>>> getVector() {
+    const vector<pair<string, vector<float>>> & getVector() const {
         return columns;
     };
 };

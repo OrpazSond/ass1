@@ -70,6 +70,16 @@ Line linear_reg(Point** points, int size) {
     return line;
 }
 
+Line linear_reg(float* x, float* y, int size) {
+    float a, b;
+    a = cov(x, y, size) / var(x, size);
+    float muX = avg(x, size);
+    float muY = avg(y, size);
+    b = muY - (a * muX);
+    Line line (a, b);
+    return line;
+}
+
 float dev(Point p,Line l){
     float lineY = l.f(p.x);
     float dev = lineY - p.y;
@@ -81,5 +91,17 @@ float dev(Point p,Line l){
 float dev(Point p,Point** points, int size){
     Line line = linear_reg(points, size);
     return dev(p, line);
+}
+
+float max_dev(float *x, float *y, Line l, int size){
+    float max = 0;
+    for (int i = 0; i < size; i++){
+        Point p(x[i], y[i]);
+        float d = dev(p,l);
+        if (d > max) {
+            max = d;
+        }
+    }
+    return max;
 }
 
