@@ -88,7 +88,7 @@ int main(){
 	// one simply anomaly is injected to the data
 	int anomaly=5+rand()%90; // one anomaly injected in a random time step
 	generateTestCSV(a1,b1,a2,b2,anomaly);
-	TimeSeries ts2("testFile1.csv");/*
+	TimeSeries ts2("testFile1.csv");
 	vector<AnomalyReport> r = ad.detect(ts2);
 
 	bool anomlyDetected=false;
@@ -109,7 +109,7 @@ int main(){
 	cout<<"done"<<endl;
 	return 0;
 }
-
+/*
 int main() {
     TimeSeries ts = TimeSeries("/home/orpaz/CLionProjects/ass1/ex2.csv");
     for (int i = 0; i < ts.getVector().size(); i++) {
@@ -117,8 +117,8 @@ int main() {
         for (int j = 0; j < ts.getVector()[i].second.size(); j++) {
             std::cout << ts.getVector()[i].second[j] << endl;
         }
-    }*/
-   };
+    }
+   };*/
 
 
 

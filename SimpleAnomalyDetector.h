@@ -15,6 +15,7 @@ struct correlatedFeatures{
 	float corrlation;
 	Line lin_reg;
 	float threshold;
+
 };
 
 
@@ -30,6 +31,9 @@ public:
 	vector<correlatedFeatures> getNormalModel(){
 		return cf;
 	}
+    int isThereCorFeature(string featureName);
+    string findCorFeature (string featureName);
+    correlatedFeatures getCF(int corFeatIndex);
 
 };
 
