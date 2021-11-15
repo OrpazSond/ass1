@@ -54,8 +54,8 @@ int SimpleAnomalyDetector::isThereCorFeature(string featureName) {
         if (CFpair.feature1.compare(featureName) == 0) {
             return i;
         }
-        return -1;
     }
+    return -1;
 }
 correlatedFeatures SimpleAnomalyDetector::getCF(int corFeatIndex) {
     return this->cf.at(corFeatIndex);
