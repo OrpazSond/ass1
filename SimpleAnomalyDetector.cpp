@@ -96,7 +96,7 @@ correlatedFeatures SimpleAnomalyDetector::getCF(int corFeatIndex) {
                 for(int k = 0; k < currentVector.size(); k++){
                     Point p1(currentVector.at(k), targetVector.at(k));
                     if(dev(p1,regLine) >= threshold * 1.1){
-                        AnomalyReport anomalyReport(currentFeature + " - " + feature2, k);
+                        AnomalyReport anomalyReport(currentFeature + "-" + feature2, k+1);
                         anomalyReportVector.push_back(anomalyReport);
                     }
                 }
