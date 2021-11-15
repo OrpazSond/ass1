@@ -99,6 +99,7 @@ correlatedFeatures SimpleAnomalyDetector::getCF(int corFeatIndex) {
                 }
             }
         }
+        // return
         return anomalyReportVector;
     }
 
