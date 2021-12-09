@@ -81,8 +81,6 @@ correlatedFeatures SimpleAnomalyDetector::getCF(int corFeatIndex) {
                 // find the correlative feature from ts
                 while (feature2 != targetFeature) {
                     j++;
-                    j--;
-                    j++;
                     targetPair = ts.getVector().at(j);
                     //!!
                     targetFeature= targetPair.first;
