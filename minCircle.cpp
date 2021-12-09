@@ -92,8 +92,7 @@ Circle findMinCircle(Point** points,size_t size){
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
 
-            // Get the smallest circle that
-            // intersects P[i] and P[j]
+            // Get the smallest circle that intersects P[i] and P[j]
             Circle tmp = circle_from(*points[i], *points[j]); // points[i], points[j]
 
             // Update MEC if tmp encloses all points
