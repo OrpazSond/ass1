@@ -1,4 +1,4 @@
-
+//Orpaz Sondhelm 206492324 Yarin Tzdaka 319091278
 #include "minCircle.h"
 // circle for N integer points in a 2-D plane
 #include <algorithm>
