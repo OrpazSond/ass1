@@ -9,7 +9,7 @@
 using namespace std;
 
 // Defining infinity
-//const double INF = 1e18;
+const float INF = 99999999;
 
 // Structure to represent a 2D point
 // Function to return the euclidean distance
@@ -32,12 +32,12 @@ bool is_inside(Circle& c, Point*& p)
 // three points are given.
 
 // Helper method to get a circle defined by 3 points
-Point get_circle_center(double bx, double by,
-                        double cx, double cy)
+Point get_circle_center(float bx, float by,
+                        float cx, float cy)
 {
-    double B = bx * bx + by * by;
-    double C = cx * cx + cy * cy;
-    double D = bx * cy - by * cx;
+    float B = bx * bx + by * by;
+    float C = cx * cx + cy * cy;
+    float D = bx * cy - by * cx;
     return Point( (cy * B - by * C) / (2 * D),
                   (bx * C - cx * B) / (2 * D));
 }
@@ -157,7 +157,7 @@ Circle welzl(vector<Point*>& P)
 
 Circle findMinCircle(Point** points,size_t size){
     vector<Point*> p ={};
-    for(int i = 0 ; i<5; i++){
+    for(int i = 0 ; i < size; i++){
         p.push_back(points[i]);
     }
 
