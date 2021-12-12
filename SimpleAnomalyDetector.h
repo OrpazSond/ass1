@@ -5,6 +5,7 @@
 
 #include "anomaly_detection_util.h"
 #include "AnomalyDetector.h"
+#include "minCircle.h"
 #include <vector>
 #include <algorithm>
 #include <string.h>
@@ -15,17 +16,21 @@ struct correlatedFeatures{
 	float corrlation;
 	Line lin_reg;
 	float threshold;
-
+    Circle minCircle;
 };
 
 
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
-	vector<correlatedFeatures> cf;
+
 public:
+    vector<correlatedFeatures> cf;
 	SimpleAnomalyDetector();
 	virtual ~SimpleAnomalyDetector();
-
-	virtual void learnNormal(const TimeSeries& ts);
+    virtual void HowToLearn(float m, float c, int i, vector<pair<string, vector<float>>> columns, int sizeLines);
+    virtual void HowToDetect(correlatedFeatures* currentCF, vector<float>* targetVector,
+                             vector<float>* currentVector, string* currentFeature,
+                             vector<AnomalyReport>* anomalyReportVector);
+    virtual void learnNormal(const TimeSeries& ts);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
 
 	vector<correlatedFeatures> getNormalModel(){
@@ -34,7 +39,6 @@ public:
     int isThereCorFeature(string featureName);
     string findCorFeature (string featureName);
     correlatedFeatures getCF(int corFeatIndex);
-
 };
 
 
