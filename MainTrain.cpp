@@ -1,7 +1,7 @@
 /*
  * run2.cpp
  *
- *  new mainnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+ *  new mainnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
  *      Author: Eli
  */
 
