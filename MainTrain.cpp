@@ -58,8 +58,6 @@ void check(string outputFile,string expectedOutputFile){
     while(!st.eof() && !ex.eof()){
         getline(st,lst);
         getline(ex,lex);
-        cout<<lst<<endl;
-/*
         if(i<13 && lst.compare(lex)!=0){ // 12
             cout<<"line "<<i<<" expected: "<<lex<<" you got "<<lst<<endl;
             cout<<"wrong output (-1)"<<endl;
@@ -71,7 +69,7 @@ void check(string outputFile,string expectedOutputFile){
             }
             j++;
         }
-        i++;*/
+        i++;
     }
     if(j<11)
         cout<<"wrong output size (-"<<(11-j)*8<<")"<<endl;

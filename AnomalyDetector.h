@@ -1,4 +1,4 @@
-//Orpaz Sondhelm 206492324 Yarin Tzdaka 319091278
+
 
 #ifndef ANOMALYDETECTOR_H_
 #define ANOMALYDETECTOR_H_
@@ -18,9 +18,10 @@ public:
 };
 
 class TimeSeriesAnomalyDetector {
-	virtual void learnNormal(const TimeSeries& ts)=0;
-	virtual vector<AnomalyReport> detect(const TimeSeries& ts)=0;
-	virtual ~TimeSeriesAnomalyDetector(){}
+public:
+    virtual void learnNormal(const TimeSeries& ts)=0;
+    virtual vector<AnomalyReport> detect(const TimeSeries& ts)=0;
+    virtual ~TimeSeriesAnomalyDetector(){}
 };
 
 #endif /* ANOMALYDETECTOR_H_ */
