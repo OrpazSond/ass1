@@ -6,6 +6,8 @@ CLI::CLI(DefaultIO* dio) {
     this->theCommands.push_back(new Correlation(this->dio));
     this->theCommands.push_back(new HybridAlgo(this->dio));
     this->theCommands.push_back(new printAnomaly(this->dio));
+    this->theCommands.push_back(new UploadAnom(this->dio));
+    this->theCommands.push_back(new Exit(this->dio));
 }
 
 void CLI::start(){
@@ -15,12 +17,12 @@ void CLI::start(){
     while (number != 6) {
         this->dio->write("Welcome to the Anomaly Detection Server.\n"
                          "Please choose an option:\n"
-                         "1. upload a time series csv file\n"
-                         "2. algorithm settings\n"
-                         "3. detect anomalies\n"
-                         "4. display results\n"
-                         "5. upload anomalies and analyze results\n"
-                         "6. exit\n");
+                         "1.upload a time series csv file\n"
+                         "2.algorithm settings\n"
+                         "3.detect anomalies\n"
+                         "4.display results\n"
+                         "5.upload anomalies and analyze results\n"
+                         "6.exit\n");
         number = std::stoi(this->dio->read());
         if (number >= 1 && number <= 5) {
             this->theCommands[number - 1]->execute(&d);

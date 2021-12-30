@@ -1,3 +1,6 @@
+//Orpaz Sondhelm 206492324 Yarin Tzdaka 319091278
+
+
 #include <fstream>
 #include <vector>
 //#include <string>
@@ -64,6 +67,9 @@ public:
         myFile.close();
     }
 
+    int getSize(){
+        return columns[0].second.size();
+    }
     const vector<pair<string, vector<float>>> & getVector() const {
         return columns;
     };
