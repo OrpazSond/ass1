@@ -103,7 +103,7 @@ public:
         TimeSeries tsTrain = TimeSeries("anomalyTrain.csv");
         TimeSeries tsTest = TimeSeries("anomalyTest.csv");
         d->fileSize = tsTest.getSize();
-        HybridAnomalyDetector hd = HybridAnomalyDetector();
+        HybridAnomalyDetector hd;
         hd.setThreshold(d->THRESHOLD);
         hd.learnNormal(tsTrain);
         d->AnomalyReportList = hd.detect(tsTest);;
@@ -168,11 +168,6 @@ public:
     }
 
     virtual void execute(data* data){
-
-    //    for(size_t i=0;i<sharedState->fixdRports.size();i++){
-    //        sharedState->fixdRports[i].tp=false;
-    //    }
-
         dio->write("Please upload your local anomalies file.\n");
         string s="";
         float TP=0,sum=0,P=0;
@@ -206,7 +201,6 @@ class Exit:public Command{
 public:
     Exit(DefaultIO* dio):Command(dio){}
     virtual void execute(data* data){
-        //cout<<description<<endl;
     }
 };
 
