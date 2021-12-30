@@ -13,7 +13,7 @@ HybridAnomalyDetector::~HybridAnomalyDetector() {
 
 
 void HybridAnomalyDetector::HowToLearn(float m, float c, int i, vector<pair<string, vector<float>>> columns, int sizeLines) {
-    if (c != -1 && m >= this->THRESHOLD) {
+    if (c != -1 && m >= this->thresh) {
         correlatedFeatures newCF;
         newCF.corrlation = m;
         newCF.feature1 = columns[i].first;
@@ -23,7 +23,7 @@ void HybridAnomalyDetector::HowToLearn(float m, float c, int i, vector<pair<stri
         this->cf.push_back(newCF);
     }
 
-    if (c!= -1 && m < this->THRESHOLD && m > MINI_THRESHOLD) {
+    if (c!= -1 && m < this->thresh && m > MINI_THRESHOLD) {
         correlatedFeatures newCF;
         Point *points[sizeLines];
         for (int j = 0; j < sizeLines; j++) {
@@ -45,14 +45,14 @@ void HybridAnomalyDetector::HowToDetect(correlatedFeatures *currentCF, vector<fl
     float threshold = currentCF->threshold;
     for (int k = 0; k < currentVector->size(); k++) {
         Point p1(currentVector->at(k), targetVector->at(k));
-        if (currentCF->corrlation >= this->THRESHOLD) {
+        if (currentCF->corrlation >= this->thresh) {
             if (dev(p1, regLine) >= threshold * 1.1) {
                 AnomalyReport anomalyReport(*currentFeature + "-" + currentCF->feature2, k + 1);
                 anomalyReportVector->push_back(anomalyReport);
             }
         }
 
-        if (currentCF->corrlation < this->THRESHOLD && currentCF->corrlation > MINI_THRESHOLD) {
+        if (currentCF->corrlation < this->thresh && currentCF->corrlation > MINI_THRESHOLD) {
             float distance = sqrt(pow(p1.x - currentCF->minCircle.center.x, 2) +
                                   pow(p1.y - currentCF->minCircle.center.y, 2) * 1.0);
             if (distance >= threshold * 1.1) {

@@ -12,7 +12,7 @@ SimpleAnomalyDetector::~SimpleAnomalyDetector() {
 }
 
  void SimpleAnomalyDetector::HowToLearn(float m, float c, int i, vector<pair<string, vector<float>>> columns, int sizeLines) {
-    if (c != -1 && m >= this->THRESHOLD) {
+    if (c != -1 && m >= this->thresh) {
         correlatedFeatures newCF;
         newCF.corrlation = m;
         newCF.feature1 = columns[i].first;

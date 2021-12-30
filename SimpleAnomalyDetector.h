@@ -24,6 +24,10 @@ class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 
 public:
     vector<correlatedFeatures> cf;
+    float thresh = 0.9;
+    void setThreshold(float t){
+        this->thresh = t;
+    }
 	SimpleAnomalyDetector();
 	virtual ~SimpleAnomalyDetector();
     virtual void HowToLearn(float m, float c, int i, vector<pair<string, vector<float>>> columns, int sizeLines);

@@ -18,11 +18,6 @@ public:
 };
 
 class TimeSeriesAnomalyDetector {
-public:
-    float THRESHOLD = 0.9;
-    void setThreshold(float t){
-        this->THRESHOLD = t;
-    }
 	virtual void learnNormal(const TimeSeries& ts)=0;
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts)=0;
 	virtual ~TimeSeriesAnomalyDetector(){}
