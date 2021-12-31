@@ -70,7 +70,7 @@ public:
     void makeFile(string name){
         std::ofstream myFile(name);
         string line = this->dio->read();
-        while (line.compare("done\n") != 0) {
+        while (line.compare("done") != 0) {
             myFile<<line;
             myFile<<"\n";
             line = this->dio->read();
@@ -172,7 +172,7 @@ public:
         dio->write("Please upload your local anomalies file.\n");
         string s="";
         float TP=0,sum=0,P=0;
-        while((s=dio->read())!="done\n"){
+        while((s=dio->read())!="done"){
             P++;
             size_t t=0;
             while(s[t] != ','){
