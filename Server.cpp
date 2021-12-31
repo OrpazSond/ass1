@@ -41,7 +41,7 @@ Server::Server(int port)throw (const char*) {
     if(listen(socNum, 3)<0)
         throw "listen failure";
 }
-
+//
 void sigHandler(int sigNum){
     cout<<"sidH"<<endl;
 }
