@@ -5,7 +5,6 @@
 
 #include<iostream>
 #include <string.h>
-
 #include <fstream>
 #include <vector>
 #include "HybridAnomalyDetector.h"
@@ -71,7 +70,7 @@ public:
     void makeFile(string name){
         std::ofstream myFile(name);
         string line = this->dio->read();
-        while (line.compare("done") != 0) {
+        while (line.compare("done\n") != 0) {
             myFile<<line;
             myFile<<"\n";
             line = this->dio->read();
@@ -89,16 +88,16 @@ public:
         float number =  std::stof(this->dio->read());
         while (number >= 1 || number <= 0){
             this->dio->write("please choose a value between 0 and 1.\n");
-            float number =  std::stof(this->dio->read());
+            float number =  stof(this->dio->read());
         }
         d->THRESHOLD = number;
     }
 };
 
 
-class HybridAlgo:public Command{
+class detect:public Command{
 public:
-    HybridAlgo(DefaultIO* dio):Command(dio){}
+    detect(DefaultIO* dio):Command(dio){}
     void execute(data *d) {
         TimeSeries tsTrain = TimeSeries("anomalyTrain.csv");
         TimeSeries tsTest = TimeSeries("anomalyTest.csv");
@@ -111,6 +110,8 @@ public:
         if(ar.size() == 0){
             return;
         }
+        
+        // saving the sequences of anomalies into vector "anomalysequences" in struct "data"
         Anomalyseq anomalyseq;
         anomalyseq.start = ar.at(0).timeStep;
         anomalyseq.end = anomalyseq.start;
@@ -171,7 +172,7 @@ public:
         dio->write("Please upload your local anomalies file.\n");
         string s="";
         float TP=0,sum=0,P=0;
-        while((s=dio->read())!="done"){
+        while((s=dio->read())!="done\n"){
             P++;
             size_t t=0;
             while(s[t] != ','){

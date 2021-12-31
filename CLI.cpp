@@ -4,7 +4,7 @@ CLI::CLI(DefaultIO* dio) {
     this->dio = dio;
     this->theCommands.push_back(new Upload(this->dio));
     this->theCommands.push_back(new Correlation(this->dio));
-    this->theCommands.push_back(new HybridAlgo(this->dio));
+    this->theCommands.push_back(new detect(this->dio));
     this->theCommands.push_back(new printAnomaly(this->dio));
     this->theCommands.push_back(new UploadAnom(this->dio));
     this->theCommands.push_back(new Exit(this->dio));
