@@ -29,7 +29,6 @@ struct Anomalyseq{
     int start;
     int end;
     string description;
-    bool tp;
 };
 
 
@@ -70,7 +69,7 @@ public:
     void makeFile(string name){
         std::ofstream myFile(name);
         string line = this->dio->read();
-        while (line.compare("done\n") != 0) {
+        while (line.compare("done") != 0) {
             myFile<<line;
             myFile<<"\n";
             line = this->dio->read();
@@ -116,7 +115,7 @@ public:
         anomalyseq.start = ar.at(0).timeStep;
         anomalyseq.end = anomalyseq.start;
         anomalyseq.description=ar.at(0).description;
-        anomalyseq.tp = false;
+
         int anomalyVecLen = ar.size();
         for(size_t i = 1; i<anomalyVecLen; i++){
             AnomalyReport currentRep = ar.at(i);
@@ -128,7 +127,6 @@ public:
                 anomalyseq.start = currentRep.timeStep;
                 anomalyseq.end = anomalyseq.start;
                 anomalyseq.description = currentRep.description;
-                anomalyseq.tp = false;
             }
         }
         d->anomalysequences.push_back(anomalyseq);
@@ -149,19 +147,18 @@ public:
             this->dio->write("\n");
             i++;
         }
-        this->dio->write("Done.\n");
+        this->dio->write("Done\n.");
     }
 };
 
-class UploadAnom:public Command{
+class UplAnm:public Command{
 public:
-    UploadAnom(DefaultIO* dio):Command(dio){}
+    UplAnm(DefaultIO* dio):Command(dio){}
 
     bool isTP(int start, int end,data* data){
         for(size_t i=0;i< data->anomalysequences.size();i++){
             Anomalyseq anomalyseq = data->anomalysequences[i];
             if(start <= anomalyseq.end && end >= anomalyseq.start){
-                data->anomalysequences[i].tp=true;
                 return true;
             }
         }
@@ -170,29 +167,33 @@ public:
 
     virtual void execute(data* data){
         dio->write("Please upload your local anomalies file.\n");
-        string s="";
-        float TP=0,sum=0,P=0;
-        while((s=dio->read())!="done\n"){
+
+        float P=0,TP=0,toSub=0;
+        string line = this->dio->read();
+        while (line.compare("done") != 0){
             P++;
             size_t t=0;
-            while(s[t] != ','){
+            while(line[t] != ','){
                 t++;
             }
-            int start = stoi(s.substr(0,t));
-            int end = stoi(s.substr(t+1,s.length()));
-            if(isTP(start,end,data))
+            int startTime = stoi(line.substr(0,t));
+            int endTime = stoi(line.substr(t+1,line.length()));
+            if(isTP(startTime,endTime,data))
                 TP++;
-            sum += end - start + 1;
+            toSub += endTime - startTime + 1;
+            line = this->dio->read();
         }
         dio->write("Upload complete.\n");
         float FP= data->anomalysequences.size() - TP;
-        float N= data->fileSize - sum;
-        float truePositiveRate=((int)(1000.0*TP/P))/1000.0f;
-        float falsePositiveRate=((int)(1000.0*FP/N))/1000.0f;
+        float N= data->fileSize - toSub;
+        float truePositiveRate= TP/P;
+        float tpr3DigAcc = ((int) (1000 * truePositiveRate))/ 1000.0f;
+        float falsePositiveRate = FP/N;
+        float fpr3DigAcc = ((int) (1000 * falsePositiveRate))/ 1000.0f;
         dio->write("True Positive Rate: ");
-        dio->write(truePositiveRate);
+        dio->write(tpr3DigAcc);
         dio->write("\nFalse Positive Rate: ");
-        dio->write(falsePositiveRate);
+        dio->write(fpr3DigAcc);
         dio->write("\n");
 
     }
