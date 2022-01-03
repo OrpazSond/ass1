@@ -142,7 +142,6 @@ size_t check(string outputFile,string expectedOutputFile){
     string lst,lex;
     while(!ex.eof()){
         getline(st,lst);
-
         getline(ex,lex);
         if(lst.compare(lex)!=0)
             i++;
@@ -154,7 +153,6 @@ size_t check(string outputFile,string expectedOutputFile){
 
 
 int main(){
-
     srand (time(NULL));
     int port=5000+ rand() % 1000;
     string outputFile1="output_menu";
@@ -172,7 +170,7 @@ int main(){
         // let's run 2 clients
         clientSide1(port,outputFile1);
         clientSide2(port,outputFile2);
-        server.stopServer(); // joins the server's thread
+        server.stop(); // joins the server's thread
     }catch(const char* s){
         cout<<s<<endl;
     }

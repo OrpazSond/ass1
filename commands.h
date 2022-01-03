@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include "HybridAnomalyDetector.h"
+#include <sys/socket.h>
 
 using namespace std;
 
@@ -20,8 +21,38 @@ public:
 	virtual ~DefaultIO(){}
 
 	// you may add additional methods here
+};
+
+class socketIO: public DefaultIO{
+    int sockNum;
+public:
+    socketIO(int sockNum):sockNum(sockNum){};
+
+    string read(){
+        string theInput = "";
+        char c;
+        while (c != '\n'){
+            recv(this->sockNum, &c, sizeof(char), 0);
+            theInput = theInput + c;
+        }
+        return theInput;
+    }
+
+    void write(string text) {
+        send(this->sockNum, text.c_str(), text.size(), 0);
+    }
+
+    virtual void write(float f) {
+        send(this->sockNum, &f, sizeof f, 0);
+    }
+
+    void read(float* f) {
+        recv(this->sockNum, f, sizeof(float), 0);
+    }
 
 };
+
+
 
 // you may add here helper classes
 
