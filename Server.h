@@ -1,23 +1,23 @@
-/*
- * Server.h
- *
- *  Created on: Dec 13, 2020
- *      Author: Eli
- */
+//Orpaz Sondhelm 206492324 Yarin Tzdaka 319091278
+
 
 #ifndef SERVER_H_
 #define SERVER_H_
 
-
-#include <thread>
 #include "commands.h"
 #include "CLI.h"
+
 #include <netinet/in.h>
+#include <iostream>
+#include <sys/socket.h>
+#include <thread>
+#include <unistd.h>
+
 
 using namespace std;
 
 
-// edit your ClientHandler interface here:
+
 class ClientHandler{
 public:
     virtual void handle(int clientID)=0;
@@ -26,7 +26,16 @@ public:
 
 
 // you can add helper classes here and implement on the cpp file
+class socketIO:public DefaultIO{
+    int cltID;
+public:
+    socketIO(int cltID):cltID(cltID){}
+    virtual string read();
+    virtual void read(float* f);
+    virtual void write(string text);
+    virtual void write(float f);
 
+};
 
 // edit your AnomalyDetectionHandler class here
 class AnomalyDetectionHandler:public ClientHandler{
@@ -45,9 +54,7 @@ class Server {
     int sock;
     sockaddr_in sockServer;
     sockaddr_in sockClient;
-    bool flag;
-
-    // you may add data members
+    bool stopFlag;
 
 public:
     Server(int port) throw (const char*);

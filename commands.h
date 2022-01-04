@@ -1,4 +1,4 @@
-
+//Orpaz Sondhelm 206492324 Yarin Tzdaka 319091278
 
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
@@ -22,36 +22,6 @@ public:
 
 	// you may add additional methods here
 };
-
-class socketIO: public DefaultIO{
-    int sockNum;
-public:
-    socketIO(int sockNum):sockNum(sockNum){};
-
-    string read(){
-        string theInput = "";
-        char c;
-        while (c != '\n'){
-            recv(this->sockNum, &c, sizeof(char), 0);
-            theInput = theInput + c;
-        }
-        return theInput;
-    }
-
-    void write(string text) {
-        send(this->sockNum, text.c_str(), text.size(), 0);
-    }
-
-    virtual void write(float f) {
-        send(this->sockNum, &f, sizeof f, 0);
-    }
-
-    void read(float* f) {
-        recv(this->sockNum, f, sizeof(float), 0);
-    }
-
-};
-
 
 
 // you may add here helper classes
@@ -100,14 +70,14 @@ public:
     void makeFile(string name){
         std::ofstream myFile(name);
         string line = this->dio->read();
-        while (line.compare("done") != 0) {
+        while (line.compare("done\n") != 0) {
             myFile<<line;
             myFile<<"\n";
             line = this->dio->read();
         }
     }
 };
-///
+
 class Correlation:public Command{
 public:
     Correlation(DefaultIO* dio):Command(dio){}
@@ -201,7 +171,7 @@ public:
 
         float P=0,TP=0,toSub=0;
         string line = this->dio->read();
-        while (line.compare("done") != 0){
+        while (line.compare("done\n") != 0){
             P++;
             size_t t=0;
             while(line[t] != ','){
